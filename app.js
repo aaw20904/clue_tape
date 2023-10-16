@@ -3,8 +3,8 @@ const fs = require("fs")
 const mime = require("mime")
 
 
-async function processRequest(req, res){
-     switch(req.method){
+async function processRequest (req, res) {
+     switch (req.method) {
         case "GET":
          await pipeFile(req,res);
         break;
