@@ -73,4 +73,5 @@ class ClueInput{
 
 window.onload=function(){
     let pNode = document.querySelector(".clue-container");
+    
 }
