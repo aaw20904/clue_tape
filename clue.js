@@ -13,31 +13,31 @@ class ClueInput{
     }
 
     _onChangeInput(evt){
-        console.log( evt.target.value);
+        this._removeList ();
     }
 
-    _createList (list=['1','2','3']) {
-        let listNode = document.createElement('ul');
-        listNode.classList.add("clue-menu","p-0","m-0","d-block","w-100","rounded-2");
-        for(const itemText of list){
+    _createList (list=['1','2','3','4','5']) {
+        let listNode = this.parentNode.querySelector(".clue-menu")
+        
+        for (const itemText of list) {
             //create list item
             let listItem = document.createElement("li");
             listItem.classList.add("px-3","py-2");
             listItem.setAttribute("data-value",itemText);
             listItem.innerText = itemText;
             listNode.appendChild(listItem);
-            listItem.addEventListener("click",this._onClickEventMenu);
+            listItem.addEventListener("click",this._onClickEventMenu.bind(this));  
+            
         }
-        let placeToInsert = this.parentNode.querySelector(".clue-container");
-        placeToInsert.appendChild(listNode)
-
+      
         return listNode;
     }
 
     _removeList () {
-        let listNode = this.parentNode.querySelector("ul");
-        for(const item of listNode.childNodes){
-            item.removeEventListener(this._clickEventMenu);
+        let listNode = document.querySelector("ul.clue-menu");
+        let arrayOfItems= Array.prototype.slice.call(listNode.childNodes);
+        for(const item of arrayOfItems){
+            item.removeEventListener("click",this._onClickEventMenu.bind(this));
             listNode.removeChild(item);
         }
     }
@@ -46,6 +46,9 @@ class ClueInput{
         //a container
         let container = document.createElement("section");
         container.classList.add("clue-container", "d-flex", "flex-column", "justify-content-center", "align-items-start");
+        //unordered list (empty)
+        let listNode = document.createElement('ul');
+        listNode.classList.add ("clue-menu","p-0","m-0","d-block","w-100","rounded-2");
         //a html input
         let textInput = document.createElement("input");
         textInput.setAttribute("type","text");
@@ -59,15 +62,16 @@ class ClueInput{
         let btnInpWrapper = document.createElement("div");
         btnInpWrapper.classList.add("d-flex", "flex-row", "justify-content-start", "align-items-center");
         //event listener for a button
-        btnSend.addEventListener('click',this._onBtnSend);
+        btnSend.addEventListener('click',this._onBtnSend.bind(this));
         //when user typing something into the Input
-        textInput.addEventListener("input",this._onChangeInput)
+        textInput.addEventListener("input",this._onChangeInput.bind(this))
         //asign child elems
         btnInpWrapper.appendChild(textInput);
          btnInpWrapper.appendChild(btnSend);
         container.appendChild(btnInpWrapper);
+      
         this.parentNode.appendChild(container);
-        
+          this.parentNode.appendChild(listNode)
         
     }
 
