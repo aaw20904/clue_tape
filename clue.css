@@ -1,9 +1,9 @@
-.clue-menu > li:hover {
+.clue-menu>li:hover {
     background-color: palegreen !important;
     cursor: pointer;
 }
 
-.clue-menu > li {
+.clue-menu>li {
     width:100% !important;
     border: 1px solid bisque !important;
     list-style-type: none !important;

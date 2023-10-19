@@ -154,10 +154,6 @@ class ClueInput{
         
     }
 
-    addClueMenu (values=["ab","cd","ef"]) {
-        let clues = this._createList(values);
-        let container = this.parentNode.querySelector(".clue-container");
-        container.appendChild(clues);
-    }
+    
 
 }
