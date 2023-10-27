@@ -27,6 +27,8 @@ class ClueInput{
         { key: 24, value: "Isabella" },
         { key: 25, value: "Evie" },
 ], callBackToSend=()=>{}){
+    /*create a MAP object from the list of objects*/
+    //it needs to have "value" as a key in Map - iteration search matching implemented by the KEY n Map! 
        this.parentNode = parentNode;
        this.list= new Set(list);
        this._callabckToSend = callBackToSend;
