@@ -1,26 +1,32 @@
 class ClueInput{
     
-    constructor(parentNode, list=[  
-                                    "Oliver",
-                                    "Olivia",
-                                    "George",
-                                    "Amelia",
-                                    "Harry",
-                                    "Isla",
-                                    "Jack",
-                                    "Ava",
-                                    "Arthur",
-                                    "Mia",
-                                    "Leo",
-                                    "Sophia",
-                                    "Muhammad",
-                                    "Grace",
-                                    "Noah",
-                                    "Lily",
-                                    "Oscar",
-                                    "Freya",
-                                    "Charlie",
-                                    "Ivy"], callBackToSend=()=>{}){
+    constructor(parentNode, list= [
+        { key: 1, value: "Oliver" },
+        { key: 2, value: "Harry" },
+        { key: 3, value: "Jack" },
+        { key: 4, value: "Charlie" },
+        { key: 5, value: "Noah" },
+        { key: 6, value: "Thomas" },
+        { key: 7, value: "William" },
+        { key: 8, value: "James" },
+        { key: 9, value: "Michael" },
+        { key: 10, value: "George" },
+        { key: 11, value: "Leo" },
+        { key: 12, value: "Isla" },
+        { key: 13, value: "Olivia" },
+        { key: 14, value: "Amelia" },
+        { key: 15, value: "Lily" },
+        { key: 16, value: "Sophie" },
+        { key: 17, value: "Mia" },
+        { key: 18, value: "Ava" },
+        { key: 19, value: "Ella" },
+        { key: 20, value: "Florence" },
+        { key: 21, value: "Emily" },
+        { key: 22, value: "Anya" },
+        { key: 23, value: "Maisie" },
+        { key: 24, value: "Isabella" },
+        { key: 25, value: "Evie" },
+], callBackToSend=()=>{}){
        this.parentNode = parentNode;
        this.list= new Set(list);
        this._callabckToSend = callBackToSend;
@@ -68,7 +74,7 @@ class ClueInput{
         this._createList(matched);
     }
 
-    _matchingArrayByTemplate(template="a", array=new Set(["apple", "bear", "garlic", "ananas", "gam", "12"])) {
+    _matchingArrayByTemplate(template="O", db=new Map([[ 1,"Oliver"], [2,"Harry"], [3,"Jack" ], [16,"Sophie" ]])) {
         if(template.length < 1){
             //when a string is empty - return an empty array
             return [];
@@ -80,9 +86,9 @@ class ClueInput{
 
         let result = [];
         let tool= new RegExp(`^${template}\w*`);
-        for (const a of array){
-            if(tool.test(a)) {
-                result.push(a)
+        for (const [key,value] of db){
+            if(tool.test(value)) {
+                result.push([key,value])
             }
         }
         return result;
@@ -90,15 +96,15 @@ class ClueInput{
 
    
 
-    _createList (list=new Set(['1','2','3','4','5'])) {
+    _createList (list=new Map([[ 1,"Oliver"], [2,"Harry"], [3,"Jack" ], [16,"Sophie" ]])) {
         let listNode = this.parentNode.querySelector(".clue-menu")
         
-        for (const itemText of list) {
+        for (const [key,value] of list) {
             //create list item
             let listItem = document.createElement("li");
             listItem.classList.add("px-3","py-2");
-            listItem.setAttribute("data-value",itemText);
-            listItem.innerText = itemText;
+            listItem.setAttribute("data-value",key);
+            listItem.innerText = value;
             listNode.appendChild(listItem);
             listItem.addEventListener("click",this._onClickEventMenu.bind(this));  
             
