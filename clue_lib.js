@@ -1,34 +1,34 @@
 class ClueInput{
     
     constructor(parentNode, list= [
-        { key: 1, value: "Oliver" },
-        { key: 2, value: "Harry" },
-        { key: 3, value: "Jack" },
-        { key: 4, value: "Charlie" },
-        { key: 5, value: "Noah" },
-        { key: 6, value: "Thomas" },
-        { key: 7, value: "William" },
-        { key: 8, value: "James" },
-        { key: 9, value: "Michael" },
-        { key: 10, value: "George" },
-        { key: 11, value: "Leo" },
-        { key: 12, value: "Isla" },
-        { key: 13, value: "Olivia" },
-        { key: 14, value: "Amelia" },
-        { key: 15, value: "Lily" },
-        { key: 16, value: "Sophie" },
-        { key: 17, value: "Mia" },
-        { key: 18, value: "Ava" },
-        { key: 19, value: "Ella" },
-        { key: 20, value: "Florence" },
-        { key: 21, value: "Emily" },
-        { key: 22, value: "Anya" },
-        { key: 23, value: "Maisie" },
-        { key: 24, value: "Isabella" },
-        { key: 25, value: "Evie" },
+        { key_x: 1, value: "Oliver" },
+        { key_x: 2, value: "Harry" },
+        { key_x: 3, value: "Jack" },
+        { key_x: 4, value: "Charlie" },
+        { key_x: 5, value: "Noah" },
+        { key_x: 6, value: "Thomas" },
+        { key_x: 7, value: "William" },
+        { key_x: 8, value: "James" },
+        { key_x: 9, value: "Michael" },
+        { key_x: 10, value: "George" },
+        { key_x: 11, value: "Leo" },
+        { key_x: 12, value: "Isla" },
+        { key_x: 13, value: "Olivia" },
+        { key_x: 14, value: "Amelia" },
+        { key_x: 15, value: "Lily" },
+        { key_x: 16, value: "Sophie" },
+        { key_x: 17, value: "Mia" },
+        { key_x: 18, value: "Ava" },
+        { key_x: 19, value: "Ella" },
+        { key_x: 20, value: "Florence" },
+        { key_x: 21, value: "Emily" },
+        { key_x: 22, value: "Anya" },
+        { key_x: 23, value: "Maisie" },
+        { key_x: 24, value: "Isabella" },
+        { key_x: 25, value: "Evie" },
 ], callBackToSend=()=>{/**the properties of an argument are: text as "value" and "key" as number  */}){
     /*create a MAP object from the list of objects*/
-    //it needs to have "value" as a key in Map - iteration search matching implemented by the KEY n Map! 
+    //it needs to have "value" as a key_x in Map - iteration search matching implemented by the KEY n Map! 
        this.parentNode = parentNode;
        //A) convert to 2-dimension array
        let twoDimArray = [];
@@ -36,7 +36,7 @@ class ClueInput{
             let item =[];
         //the first item in subarray can be textValue because it can be parameter for search/matching 
             item.push(elem.value);
-            item.push(elem.key);
+            item.push(elem.key_x);
             twoDimArray.push(item);
        }
        //B) convert to Map
@@ -58,7 +58,7 @@ class ClueInput{
         //checking - is the value exist in a list?
         if(this.list.has(selectedParameter)){
             let key = this.list.get(selectedParameter);
-            this._callabckToSend({value:selectedParameter, key});
+            this._callabckToSend({value:selectedParameter, key_x:key});
         } else {
             let warn = this.parentNode.querySelector("p.warning-string");
             let input = this.parentNode.querySelector("input.clue-input");
