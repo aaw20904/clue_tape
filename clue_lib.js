@@ -26,18 +26,30 @@ class ClueInput{
         { key: 23, value: "Maisie" },
         { key: 24, value: "Isabella" },
         { key: 25, value: "Evie" },
-], callBackToSend=()=>{}){
+], callBackToSend=()=>{/**the properties of an argument are: text as "value" and "key" as number  */}){
     /*create a MAP object from the list of objects*/
     //it needs to have "value" as a key in Map - iteration search matching implemented by the KEY n Map! 
        this.parentNode = parentNode;
-       this.list= new Set(list);
+       //A) convert to 2-dimension array
+       let twoDimArray = [];
+       for (const elem of list) {
+            let item =[];
+        //the first item in subarray can be textValue because it can be parameter for search/matching 
+            item.push(elem.value);
+            item.push(elem.key);
+            twoDimArray.push(item);
+       }
+       //B) convert to Map
+
+       this.list= new Map(twoDimArray);
        this._callabckToSend = callBackToSend;
        this._onBtnSend = this._onBtnSend.bind(this);
        this._onChangeInput = this._onChangeInput.bind(this);
     }
 
     _onClickEventMenu(evt){
-       let valueOfItem = evt.target.getAttribute("data-value");
+       //let valueOfItem = evt.target.getAttribute("data-key");
+       let valueOfItem = evt.target.innerText;
        this.parentNode.querySelector("input.clue-input").value = valueOfItem;
     }
 
@@ -45,7 +57,8 @@ class ClueInput{
         let selectedParameter=this.parentNode.querySelector("input.clue-input").value;
         //checking - is the value exist in a list?
         if(this.list.has(selectedParameter)){
-            this._callabckToSend(selectedParameter);
+            let key = this.list.get(selectedParameter);
+            this._callabckToSend({value:selectedParameter, key});
         } else {
             let warn = this.parentNode.querySelector("p.warning-string");
             let input = this.parentNode.querySelector("input.clue-input");
@@ -82,31 +95,31 @@ class ClueInput{
             return [];
         }
         //there must be letters or numbers
-        if (! /[A-Za-z]/.test(template)) {
+        if (! /[A-Z,a-z,А-Я,а-я]/.test(template)) {
             return [];
         }
 
         let result = [];
         let tool= new RegExp(`^${template}\w*`);
         for (const [key,value] of db){
-            if(tool.test(value)) {
+            if(tool.test(key)) {
                 result.push([key,value])
             }
         }
-        return result;
+        return new Map(result);
     }
 
    
 
-    _createList (list=new Map([[ 1,"Oliver"], [2,"Harry"], [3,"Jack" ], [16,"Sophie" ]])) {
+    _createList (list=new Map([[ "Oliver", 1], ["Harry", 2], ["Jack", 3], ["Sophie", 4]])) {
         let listNode = this.parentNode.querySelector(".clue-menu")
-        
+        //attribute = 1; inner text = "Oliver"
         for (const [key,value] of list) {
             //create list item
             let listItem = document.createElement("li");
             listItem.classList.add("px-3","py-2");
-            listItem.setAttribute("data-value",key);
-            listItem.innerText = value;
+            listItem.setAttribute("data-key",value);
+            listItem.innerText = key;
             listNode.appendChild(listItem);
             listItem.addEventListener("click",this._onClickEventMenu.bind(this));  
             
@@ -156,7 +169,6 @@ class ClueInput{
         btnInpWrapper.appendChild(textInput);
          btnInpWrapper.appendChild(btnSend);
         container.appendChild(btnInpWrapper);
-      
         this.parentNode.appendChild(container);
           this.parentNode.appendChild(listNode)
         
